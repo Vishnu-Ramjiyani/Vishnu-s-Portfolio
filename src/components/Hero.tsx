@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
                             View Projects
                         </a>
                         <a 
-                            href="/resume.pdf" 
+                            href="/Vishnu_Ramjiyani_CV.pdf" 
                             download="Vishnu_Ramjiyani_CV.pdf" 
                             className="px-8 py-4 border border-brand-primary text-brand-primary font-bold rounded-full hover:bg-brand-primary hover:text-brand-bg transition-all hover:-translate-y-1 flex items-center gap-2"
                         >
