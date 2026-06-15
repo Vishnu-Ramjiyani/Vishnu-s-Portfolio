@@ -124,7 +124,7 @@ const Certifications: React.FC = () => {
                                 <Heart className="text-brand-primary fill-brand-primary/10" /> Soft Skills
                             </h3>
                             
-                            <div className="flex flex-wrap gap-2.5">
+                            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2.5">
                                 {softSkills.map((skill, index) => (
                                     <motion.span
                                         key={index}
@@ -133,7 +133,7 @@ const Certifications: React.FC = () => {
                                         viewport={{ once: true }}
                                         transition={{ delay: index * 0.05 }}
                                         whileHover={{ scale: 1.05 }}
-                                        className="px-4 py-2 bg-brand-secondary/10 hover:bg-brand-secondary/25 text-brand-primary hover:text-brand-accent rounded-full text-sm font-bold border border-brand-secondary/20 transition-all cursor-default"
+                                        className="px-4 py-2 bg-brand-secondary/10 hover:bg-brand-secondary/25 text-brand-primary hover:text-brand-accent rounded-full text-sm font-bold border border-brand-secondary/20 transition-all cursor-default text-center"
                                     >
                                         {skill}
                                     </motion.span>

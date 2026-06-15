@@ -36,6 +36,23 @@ const Navbar: React.FC = () => {
     }, []);
 
     useEffect(() => {
+        if (!isOpen) return;
+
+        const initialScrollY = window.scrollY;
+        const threshold = 30; // px threshold to avoid accidental closures on opening/layout shifts
+
+        const handleScrollClose = () => {
+            const currentScrollY = window.scrollY;
+            if (Math.abs(currentScrollY - initialScrollY) > threshold) {
+                setIsOpen(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScrollClose);
+        return () => window.removeEventListener('scroll', handleScrollClose);
+    }, [isOpen]);
+
+    useEffect(() => {
         const sections = ['home', 'about', 'skills', 'projects', 'experience', 'education', 'certificates', 'contact'];
         
         const observerOptions = {
@@ -75,8 +92,11 @@ const Navbar: React.FC = () => {
                 style={{ scaleX }}
             />
             <nav
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-brand-bg/80 backdrop-blur-md py-4 shadow-lg shadow-black/10 dark:shadow-black' : 'bg-transparent py-6'
-                    }`}
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                    scrolled 
+                        ? 'bg-brand-bg/80 backdrop-blur-md py-4 shadow-lg shadow-black/10 dark:shadow-black' 
+                        : 'bg-transparent py-6'
+                }`}
             >
                 <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
                     <a href="#" className="text-2xl font-black text-brand-accent hover:text-brand-primary transition-colors font-serif">
@@ -131,41 +151,42 @@ const Navbar: React.FC = () => {
                         </button>
                     </div>
                 </div>
-
-                {/* Mobile Menu Overlay */}
-                <AnimatePresence>
-                    {isOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, x: '100%' }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: '100%' }}
-                            transition={{ type: 'tween', duration: 0.3 }}
-                            className="fixed inset-0 bg-brand-bg/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center space-y-8 md:hidden"
-                        >
-                            <button
-                                onClick={() => setIsOpen(false)}
-                                className="absolute top-6 right-6 text-brand-accent hover:text-brand-primary"
-                            >
-                                <X size={32} />
-                            </button>
-                            {navLinks.map((link) => (
-                                <a
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className={`text-2xl transition-colors uppercase tracking-widest font-serif ${
-                                        activeSection === link.href.substring(1)
-                                            ? 'text-brand-primary font-bold'
-                                            : 'text-brand-accent/80 hover:text-brand-primary'
-                                    }`}
-                                >
-                                    {link.name}
-                                </a>
-                            ))}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </nav>
+
+            {/* Mobile Menu Overlay */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        className="fixed inset-0 bg-brand-bg/98 backdrop-blur-xl z-[100] flex flex-col items-center justify-center space-y-8 md:hidden"
+                    >
+                        <button
+                            onClick={() => setIsOpen(false)}
+                            className="absolute top-6 right-6 text-brand-accent hover:text-brand-primary transition-colors"
+                            aria-label="Close menu"
+                        >
+                            <X size={32} />
+                        </button>
+                        {navLinks.map((link) => (
+                            <a
+                                key={link.name}
+                                href={link.href}
+                                onClick={() => setIsOpen(false)}
+                                className={`text-2xl transition-colors uppercase tracking-widest font-serif ${
+                                    activeSection === link.href.substring(1)
+                                        ? 'text-brand-primary font-bold'
+                                        : 'text-brand-accent/80 hover:text-brand-primary'
+                                }`}
+                            >
+                                {link.name}
+                            </a>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </>
     );
 };
