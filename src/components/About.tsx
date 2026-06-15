@@ -32,7 +32,7 @@ const About: React.FC = () => {
                         </p>
                         <div className="mt-8">
                             <a 
-                                href="/resume.pdf" 
+                                href="/Vishnu_Ramjiyani_CV.pdf" 
                                 download="Vishnu_Ramjiyani_CV.pdf"
                                 className="inline-block px-6 py-3 bg-brand-primary text-white text-sm font-bold rounded-xl hover:bg-brand-accent hover:text-brand-bg transition-all shadow-glow hover:shadow-glow-lg"
                             >
